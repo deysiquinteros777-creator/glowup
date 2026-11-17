@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#7a2e4a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Glow Up">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="manifest" href="manifest.json">
+<title>Glow Up · Deysi</title>
+<style>
+:root{--bg:#faf6f3;--card:#fff;--ink:#2b1d22;--muted:#8a7a80;--pri:#7a2e4a;--pri2:#a64d6d;--gold:#c9a27e;--ok:#3f7d5c;--warn:#b5651d;--line:#eee3dd}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);font-size:16px;padding-bottom:calc(76px + env(safe-area-inset-bottom))}
+header{background:var(--pri);color:#fff;padding:calc(14px + env(safe-area-inset-top)) 16px 14px;position:sticky;top:0;z-index:5}
+header h1{margin:0;font-size:19px;font-weight:600;letter-spacing:.3px}
+header .sub{font-size:13px;opacity:.8;margin-top:2px}
+main{padding:12px;max-width:640px;margin:0 auto}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+.card h2{font-size:15px;margin:0 0 10px;color:var(--pri);text-transform:uppercase;letter-spacing:.6px}
+label{display:block;font-size:13px;color:var(--muted);margin:8px 0 4px}
+input[type=text],input[type=number],input[type=time],input[type=date],textarea,select{width:100%;font-size:16px;padding:10px;border:1px solid #ddd0c9;border-radius:10px;background:#fff;color:var(--ink);font-family:inherit}
+textarea{min-height:64px;resize:vertical}
+.row{display:flex;gap:8px}.row>*{flex:1}
+.chk{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);font-size:15px}
+.chk:last-child{border-bottom:0}
+.chk input{width:24px;height:24px;accent-color:var(--pri);flex:none}
+.chk input[type=text]{flex:1;width:auto}
+.nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.nav b{font-size:15px}
+button{font-size:15px;padding:10px 14px;border-radius:10px;border:1px solid var(--pri);background:#fff;color:var(--pri);font-weight:600}
+button.p{background:var(--pri);color:#fff}
+.seg{display:flex;gap:6px;margin:6px 0}.seg button{flex:1;padding:9px 4px;font-size:14px}
+.seg button.on{background:var(--pri);color:#fff}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px}
+.kpi .v{font-size:24px;font-weight:700;color:var(--pri)}
+.kpi .l{font-size:12px;color:var(--muted);margin-top:2px}
+.note{font-size:13px;color:var(--muted);line-height:1.4}
+.alert{background:#fdecec;border:1px solid #f3c3c3;color:#8b1e1e;border-radius:10px;padding:10px;font-size:13px;line-height:1.4}
+.tip{background:#fbf3ea;border:1px solid #efd9c1;border-radius:10px;padding:10px;font-size:13px;line-height:1.4}
+.calc{font-size:14px;margin-top:8px;color:var(--ink)}
+.hidden{display:none}
+nav.tabs{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);display:flex;padding-bottom:env(safe-area-inset-bottom);z-index:10}
+nav.tabs button{flex:1;border:0;border-radius:0;background:none;color:var(--muted);font-size:11px;padding:8px 0 10px;font-weight:600}
+nav.tabs button span{display:block;font-size:20px;margin-bottom:2px}
+nav.tabs button.on{color:var(--pri)}
+svg text{font-size:10px;fill:var(--muted)}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(90px + env(safe-area-inset-bottom));background:var(--ink);color:#fff;padding:8px 14px;border-radius:20px;font-size:13px;opacity:0;transition:opacity .3s;pointer-events:none}
+.toast.show{opacity:.92}
+</style>
+</head>
+<body>
+<header><h1>Glow Up · Deysi</h1><div class="sub" id="sub"></div></header>
+<main id="app"></main>
+<div class="toast" id="toast"></div>
+<nav class="tabs" id="tabs">
+  <button data-tab="hoy" class="on"><span>☀︎</span>Hoy</button>
+  <button data-tab="semana"><span>◷</span>Semana</button>
+  <button data-tab="finanzas"><span>$</span>Finanzas</button>
+  <button data-tab="tablero"><span>▦</span>Tablero</button>
+  <button data-tab="ajustes"><span>⚙︎</span>Ajustes</button>
+</nav>
+<script>
+/* ====== Datos: se guardan SOLO en este teléfono ====== */
+const KEY='glowup_v1';
+const DEF={settings:{wakeGoal:'07:30',sleepGoal:'22:45',redesMax:60,mlTrago:30,grad:30,limiteDinero:''},days:{},weeks:{},months:{},lastBackup:null};
+let S;
+try{S=JSON.parse(localStorage.getItem(KEY))||structuredClone(DEF)}catch(e){S=structuredClone(DEF)}
+S.settings=Object.assign({},DEF.settings,S.settings||{});['days','weeks','months'].forEach(k=>S[k]=S[k]||{});
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){toast('⚠️ No se pudo guardar')}}
+if(navigator.storage&&navigator.storage.persist)navigator.storage.persist();
+
+const HABITS=[['h_wake','Me levanté a mi hora meta'],['h_move','Entrené, caminé o bailé ≥ 30 min'],['h_home','Ordené la casa 15 min'],['h_joy','Canté o bailé por gusto'],['h_redes','Redes dentro de mi límite']];
+const WQ=[['q1','1) ¿Qué prometí y cumplí?'],['q2','2) ¿Qué postergué y por qué?'],['q3','3) ¿Qué obstáculos se repitieron?'],['q4','4) ¿Qué resultados obtuve?'],['q5','5) ¿Qué debo corregir o dejar?'],['q6','6) Mis 3 prioridades de la próxima semana']];
+
+/* ====== Fechas (DD/MM/AAAA, hora Ecuador del teléfono) ====== */
+const pad=n=>String(n).padStart(2,'0');
+const iso=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const parse=s=>{const[y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d)};
+const fmt=s=>{const[y,m,d]=s.split('-');return d+'/'+m+'/'+y};
+const addDays=(s,n)=>{const d=parse(s);d.setDate(d.getDate()+n);return iso(d)};
+const monday=s=>{const d=parse(s);const w=(d.getDay()+6)%7;d.setDate(d.getDate()-w);return iso(d)};
+const DOW=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+const today=()=>iso(new Date());
+let cur={tab:'hoy',day:today(),week:monday(today()),month:today().slice(0,7),range:7};
+
+const esc=v=>String(v??'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+const num=v=>(v===''||v==null||isNaN(+v))?null:+v;
+const money=v=>v==null?'—':'USD '+v.toLocaleString('es-EC',{minimumFractionDigits:2,maximumFractionDigits:2});
+
+/* ====== Enlace automático campo → dato (data-k="days|2026-11-17|campo") ====== */
+function getRef(path){const p=path.split('|');let o=S;for(let i=0;i<p.length-1;i++){o[p[i]]=o[p[i]]||{};o=o[p[i]]}return[o,p[p.length-1]]}
+function val(path){const[o,k]=getRef(path);return o[k]}
+function inp(path,type='text',ph=''){const v=val(path);return `<input type="${type}" data-k="${path}" value="${esc(v)}" placeholder="${esc(ph)}" ${type==='number'?'inputmode="decimal" step="any"':''}>`}
+function area(path,ph=''){return `<textarea data-k="${path}" placeholder="${esc(ph)}">${esc(val(path))}</textarea>`}
+function chk(path,label){return `<label class="chk"><input type="checkbox" data-k="${path}" ${val(path)?'checked':''}> ${label}</label>`}
+document.addEventListener('input',e=>{const k=e.target.dataset.k;if(!k)return;const[o,f]=getRef(k);
+  o[f]=e.target.type==='checkbox'?e.target.checked:e.target.type==='number'?(e.target.value===''?'':+e.target.value):e.target.value;
+  save();if(e.target.dataset.live!==undefined||e.target.type==='checkbox'||e.target.tagName==='SELECT')live()});
+document.addEventListener('change',e=>{if(e.target.dataset.k&&(e.target.type==='checkbox'||e.target.tagName==='SELECT'))render()});
+
+/* ====== Cálculos ====== */
+function sleepHours(d){if(!d||!d.dormi||!d.desperte)return null;const[a,b]=d.dormi.split(':').map(Number),[c,e]=d.desperte.split(':').map(Number);let m=(c*60+e)-(a*60+b);if(m<=0)m+=1440;return m/60}
+function stdDrinks(d){ // 1 trago estándar = 14 g de alcohol puro
+  if(!d||d.alc!=='si')return 0;const n=num(d.alc_n),ml=num(d.alc_ml)??S.settings.mlTrago,g=num(d.alc_grad)??S.settings.grad;
+  if(n==null)return 0;return n*ml*(g/100)*0.789/14}
+function habitPct(d){if(!d)return null;let c=0;HABITS.forEach(([k])=>{if(d[k])c++});return c/HABITS.length}
+function daysRange(n){const out=[];for(let i=n-1;i>=0;i--)out.push(addDays(today(),-i));return out}
+
+/* ====== Pantallas ====== */
+function vHoy(){const D=cur.day,p='days|'+D+'|',d=S.days[D]||{};
+  const isToday=D===today();
+  return `<div class="nav"><button data-go="-1">‹</button><b>${DOW[parse(D).getDay()]} ${fmt(D)}${isToday?' · hoy':''}</b><button data-go="1" ${isToday?'disabled style="opacity:.3"':''}>›</button></div>
+  <div class="card"><h2>Mi única prioridad</h2>${inp(p+'prioridad','text','Lo que sí o sí se hace hoy')}
+    <label>Hasta 3 tareas (bloques de 10–20 min)</label>
+    ${[1,2,3].map(i=>`<div class="chk"><input type="checkbox" data-k="${p}t${i}ok" ${d['t'+i+'ok']?'checked':''}><input type="text" data-k="${p}t${i}" value="${esc(d['t'+i])}" placeholder="Tarea ${i}"></div>`).join('')}
+    ${chk(p+'dificil','Hoy fue día difícil: hice solo la acción mínima')}
+  </div>
+  <div class="card"><h2>Hábitos <span id="hpct" style="float:right;color:var(--ink)"></span></h2>${HABITS.map(([k,l])=>chk(p+k,l)).join('')}</div>
+  <div class="card"><h2>Sueño y redes</h2>
+    <div class="row"><div><label>Me dormí</label>${inp(p+'dormi','time')}</div><div><label>Me levanté</label>${inp(p+'desperte','time')}</div></div>
+    ${chk(p+'madrugada','Desperté de madrugada')}
+    <div class="row"><div><label>Minutos en redes/juegos</label>${inp(p+'redes','number','0')}</div><div><label>Seguimientos comerciales hechos</label>${inp(p+'seg','number','0')}</div></div>
+    <div class="calc" id="sleepcalc"></div>
+  </div>
+  <div class="card"><h2>Registro de alcohol</h2>
+    <div class="seg">${[['no','No bebí'],['si','Sí bebí'],['','Sin registrar']].map(([v,l])=>`<button data-alc="${v}" class="${(d.alc||'')===v?'on':''}">${l}</button>`).join('')}</div>
+    <div class="${d.alc==='si'?'':'hidden'}">
+      <div class="row"><div><label>Bebida</label>${inp(p+'alc_tipo','text','Aguardiente')}</div><div><label>Graduación % (etiqueta)</label><input type="number" inputmode="decimal" data-live data-k="${p}alc_grad" value="${esc(d.alc_grad??'')}" placeholder="${S.settings.grad}"></div></div>
+      <div class="row"><div><label>N.º de tragos/copas que tomé YO</label><input type="number" inputmode="decimal" data-live data-k="${p}alc_n" value="${esc(d.alc_n??'')}" placeholder="0"></div><div><label>ml por trago</label><input type="number" inputmode="decimal" data-live data-k="${p}alc_ml" value="${esc(d.alc_ml??'')}" placeholder="${S.settings.mlTrago}"></div></div>
+      <div class="row"><div><label>Desde (hora)</label>${inp(p+'alc_ini','time')}</div><div><label>Hasta (hora)</label>${inp(p+'alc_fin','time')}</div></div>
+      <label>Con quién / ocasión</label>${inp(p+'alc_con','text','Ej.: amigas, reunión')}
+      <label>Al día siguiente: cómo me sentí / consecuencias</label>${area(p+'alc_cons','Sueño, ánimo, gastos, discusiones, temblor, sudoración…')}
+      <div class="calc" id="alccalc"></div>
+    </div>
+    <div class="alert" style="margin-top:10px">Este registro es para llevarle datos reales al médico. <b>No suspendas el consumo de golpe sin valoración médica.</b> Si hay convulsiones, alucinaciones o confusión: <b>emergencia, llama al 911</b>.</div>
+  </div>
+  <div class="card"><h2>Revisión de 2 minutos</h2>${area(p+'nota','¿Qué funcionó hoy? ¿Qué corrijo mañana?')}</div>`}
+
+function vSemana(){const W=cur.week,p='weeks|'+W+'|',days=[...Array(7)].map((_,i)=>addDays(W,i));
+  let mov=0,hab=0,habN=0,alcD=0,std=0,seg=0;days.forEach(k=>{const d=S.days[k];if(!d)return;if(d.h_move)mov++;const h=habitPct(d);if(h!=null&&Object.keys(d).length){hab+=h;habN++}if(d.alc==='si')alcD++;std+=stdDrinks(d);seg+=num(d.seg)||0});
+  return `<div class="nav"><button data-wk="-7">‹</button><b>Semana ${fmt(W)} – ${fmt(addDays(W,6))}</b><button data-wk="7">›</button></div>
+  <div class="kpis" style="margin-bottom:12px">
+   <div class="kpi"><div class="v">${habN?Math.round(hab/habN*100):0}%</div><div class="l">Hábitos cumplidos (días registrados: ${habN}/7)</div></div>
+   <div class="kpi"><div class="v">${mov}</div><div class="l">Días con entrenamiento / movimiento</div></div>
+   <div class="kpi"><div class="v">${alcD}</div><div class="l">Días con alcohol · ${std.toFixed(1)} tragos estándar</div></div>
+   <div class="kpi"><div class="v">${seg}</div><div class="l">Seguimientos comerciales</div></div>
+  </div>
+  <div class="card"><h2>Cuerpo</h2>
+   <div class="row"><div><label>Peso (lb) · indicador complementario</label>${inp(p+'peso','number','')}</div><div><label>Cintura (cm) · opcional</label>${inp(p+'cintura','number','')}</div></div>
+   <label>Sesiones de fuerza esta semana</label>${inp(p+'fuerza','number','0')}
+   <label>Punzadas abdominales u otras molestias</label>${inp(p+'molestias','text','Si persisten o son intensas: valoración médica')}
+  </div>
+  <div class="card"><h2>Revisión semanal</h2>${WQ.map(([k,l])=>`<label>${l}</label>${area(p+k)}`).join('')}
+   <div class="tip" style="margin-top:10px">Una mala semana no es fracaso. Si no cumpliste lo actual, <b>no agregues metas nuevas</b>.</div></div>
+  <div class="card"><h2>Salud · plan profesional del alcohol</h2>
+   ${chk(p+'cita','Tengo cita médica agendada o realizada')}
+   <label>Notas de la cita / indicaciones</label>${area(p+'cita_nota')}</div>`}
+
+function vFinanzas(){const M=cur.month,p='months|'+M+'|',m=S.months[M]||{};
+  const ing=num(m.ingresos),gas=['vivienda','comida','transporte','servicios','deuda_pago','personal','otros'].reduce((a,k)=>a+(num(m[k])||0),0),flujo=ing!=null?ing-gas:null;
+  const [y,mm]=M.split('-');const mes=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'][+mm-1];
+  return `<div class="nav"><button data-mo="-1">‹</button><b>${mes} ${y}</b><button data-mo="1">›</button></div>
+  <div class="card"><h2>Ingresos del mes</h2><label>Ingreso neto recibido (USD)</label>${inp(p+'ingresos','number','0')}</div>
+  <div class="card"><h2>Gastos del mes (USD)</h2>
+   <div class="row"><div><label>Vivienda</label>${inp(p+'vivienda','number')}</div><div><label>Comida</label>${inp(p+'comida','number')}</div></div>
+   <div class="row"><div><label>Transporte</label>${inp(p+'transporte','number')}</div><div><label>Servicios</label>${inp(p+'servicios','number')}</div></div>
+   <div class="row"><div><label>Pago de deudas</label>${inp(p+'deuda_pago','number')}</div><div><label>Personal / belleza</label>${inp(p+'personal','number')}</div></div>
+   <label>Otros (incluye salidas y alcohol)</label>${inp(p+'otros','number')}
+  </div>
+  <div class="card"><h2>Deuda y ahorro</h2>
+   <div class="row"><div><label>Saldo total de deuda al cierre</label>${inp(p+'deuda_saldo','number')}</div><div><label>Ahorro acumulado</label>${inp(p+'ahorro','number')}</div></div>
+  </div>
+  <div class="card"><h2>Resultado</h2>
+   <div class="kpis"><div class="kpi"><div class="v">${money(gas)}</div><div class="l">Gastos registrados</div></div>
+   <div class="kpi"><div class="v" style="color:${flujo==null?'var(--muted)':flujo<0?'#b42318':'var(--ok)'}">${money(flujo)}</div><div class="l">Flujo de caja (ingresos − gastos)</div></div></div>
+   <p class="note">${flujo==null?'Registra ingresos y gastos reales para saber si el ahorro del 20% es viable.':flujo<=0?'Hoy no hay margen para ahorrar: primero hay que bajar gastos o subir ingresos.':`Margen disponible: ${Math.round(flujo/ing*100)}% del ingreso. La meta del 20% sería ${money(ing*0.2)}.`}</p>
+  </div>`}
+
+function chartLine(points,unit){ // points [[label,value]]
+  const pts=points.filter(p=>p[1]!=null);if(pts.length<2)return '<p class="note">Faltan al menos 2 registros para ver la tendencia.</p>';
+  const W=320,H=140,pl=34,pb=20,vs=pts.map(p=>p[1]),mn=Math.min(...vs),mx=Math.max(...vs),rg=(mx-mn)||1;
+  const x=i=>pl+i*(W-pl-8)/(pts.length-1),y=v=>8+(H-pb-8)*(1-(v-mn)/rg);
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%"><text x="0" y="${y(mx)+3}">${mx}</text><text x="0" y="${y(mn)+3}">${mn}</text>
+  <polyline fill="none" stroke="#7a2e4a" stroke-width="2.5" points="${pts.map((p,i)=>x(i)+','+y(p[1])).join(' ')}"/>
+  ${pts.map((p,i)=>`<circle cx="${x(i)}" cy="${y(p[1])}" r="3.5" fill="#7a2e4a"/>`).join('')}
+  <text x="${pl}" y="${H-4}">${pts[0][0]}</text><text x="${W-8}" y="${H-4}" text-anchor="end">${pts[pts.length-1][0]} ${unit}</text></svg>`}
+function chartBars(items,color){const W=320,H=120,pb=18,mx=Math.max(1,...items.map(i=>i[1]||0)),bw=(W-10)/items.length;
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%">${items.map((it,i)=>{const h=(H-pb-6)*((it[1]||0)/mx);return `<rect x="${5+i*bw+1}" y="${H-pb-h}" width="${bw-2}" height="${h}" rx="2" fill="${color}"/>${items.length<=14||i%5===0?`<text x="${5+i*bw+bw/2}" y="${H-5}" text-anchor="middle">${it[0]}</text>`:''}`}).join('')}</svg>`}
+
+function vTablero(){const n=cur.range,ds=daysRange(n);let reg=0,hab=0,mov=0,alcD=0,std=0,slp=0,slpN=0,red=0,redN=0,seg=0,top=0;
+  ds.forEach(k=>{const d=S.days[k];if(!d||!Object.keys(d).length)return;reg++;hab+=habitPct(d);if(d.h_move)mov++;if(d.alc==='si')alcD++;std+=stdDrinks(d);const s=sleepHours(d);if(s){slp+=s;slpN++}if(num(d.redes)!=null){red+=+d.redes;redN++}seg+=num(d.seg)||0;if(d.prioridad&&d.t1ok!==undefined)top++});
+  const weeks=Object.keys(S.weeks).sort().slice(-12),peso=weeks.map(w=>[fmt(w).slice(0,5),num(S.weeks[w].peso)]);
+  const bk=S.lastBackup?Math.floor((Date.now()-S.lastBackup)/864e5):null;
+  return `<div class="seg">${[7,30,90].map(r=>`<button data-rg="${r}" class="${cur.range===r?'on':''}">${r} días</button>`).join('')}</div>
+  ${bk==null||bk>=7?`<div class="tip" style="margin-bottom:12px">⚠️ ${bk==null?'Aún no tienes respaldo.':'Último respaldo hace '+bk+' días.'} Ve a <b>Ajustes → Respaldar</b>.</div>`:''}
+  <div class="kpis" style="margin-bottom:12px">
+   <div class="kpi"><div class="v">${reg}/${n}</div><div class="l">Días registrados (constancia)</div></div>
+   <div class="kpi"><div class="v">${reg?Math.round(hab/reg*100):0}%</div><div class="l">Hábitos cumplidos / programados</div></div>
+   <div class="kpi"><div class="v">${alcD}</div><div class="l">Días con alcohol</div></div>
+   <div class="kpi"><div class="v">${std.toFixed(1)}</div><div class="l">Tragos estándar (14 g) en el periodo</div></div>
+   <div class="kpi"><div class="v">${slpN?(slp/slpN).toFixed(1):'—'} h</div><div class="l">Sueño promedio</div></div>
+   <div class="kpi"><div class="v">${redN?Math.round(red/redN):'—'}</div><div class="l">Min/día en redes (límite ${S.settings.redesMax})</div></div>
+   <div class="kpi"><div class="v">${mov}</div><div class="l">Días con movimiento</div></div>
+   <div class="kpi"><div class="v">${seg}</div><div class="l">Seguimientos comerciales</div></div>
+  </div>
+  <div class="card"><h2>Hábitos por día (%)</h2>${chartBars(ds.slice(-14).map(k=>[parse(k).getDate(),Math.round((habitPct(S.days[k])||0)*100)]),'#a64d6d')}</div>
+  <div class="card"><h2>Tragos estándar por día</h2>${chartBars(ds.slice(-14).map(k=>[parse(k).getDate(),+stdDrinks(S.days[k]).toFixed(1)]),'#c9a27e')}<p class="note">Últimos 14 días. Muestra esta gráfica en tu consulta médica.</p></div>
+  <div class="card"><h2>Peso semanal (lb)</h2>${chartLine(peso,'lb')}<p class="note">El peso es complementario: mira también fuerza y constancia.</p></div>`}
+
+function vAjustes(){const p='settings|';
+  return `<div class="card"><h2>Metas graduales</h2>
+   <p class="note">Ajusta de 15 en 15 minutos cada semana, no de golpe.</p>
+   <div class="row"><div><label>Hora meta para levantarme</label>${inp(p+'wakeGoal','time')}</div><div><label>Hora meta para dormir</label>${inp(p+'sleepGoal','time')}</div></div>
+   <label>Límite diario de redes/juegos (min)</label>${inp(p+'redesMax','number')}</div>
+  <div class="card"><h2>Alcohol · valores por defecto</h2>
+   <div class="row"><div><label>ml por trago habitual</label>${inp(p+'mlTrago','number')}</div><div><label>Graduación % habitual</label>${inp(p+'grad','number')}</div></div>
+   <p class="note">Revisa la graduación en la etiqueta de la botella; varía según la marca.</p></div>
+  <div class="card"><h2>Respaldo de mis datos</h2>
+   <p class="note">Tus datos viven solo en este iPhone. Respalda cada domingo y guarda el archivo en iCloud Drive o en la carpeta GlowUp de tu Mac.</p>
+   <div class="row" style="margin-top:8px"><button class="p" id="bk">Respaldar</button><button id="rs">Restaurar</button></div>
+   <input type="file" id="file" accept=".json,application/json" class="hidden">
+   <p class="note" style="margin-top:8px">Último respaldo: ${S.lastBackup?new Date(S.lastBackup).toLocaleDateString('es-EC'):'nunca'}</p></div>`}
+
+/* ====== Actualización en vivo de cálculos ====== */
+function live(){const d=S.days[cur.day]||{};const h=document.getElementById('hpct');if(h)h.textContent=Math.round((habitPct(d)||0)*100)+'%';
+  const sc=document.getElementById('sleepcalc');if(sc){const s=sleepHours(d);sc.textContent=s?`Dormiste ${s.toFixed(1)} h · meta: dormir ${S.settings.sleepGoal}, levantarte ${S.settings.wakeGoal}`:''}
+  const ac=document.getElementById('alccalc');if(ac){const s=stdDrinks(d);ac.innerHTML=s?`≈ <b>${s.toFixed(1)} tragos estándar</b> (${(s*14).toFixed(0)} g de alcohol puro)`:''}}
+
+function render(){const v={hoy:vHoy,semana:vSemana,finanzas:vFinanzas,tablero:vTablero,ajustes:vAjustes}[cur.tab];
+  document.getElementById('app').innerHTML=v();document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.tab===cur.tab));
+  document.getElementById('sub').textContent='Hoy: '+fmt(today());live()}
+
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const ds=b.dataset;
+  if(ds.tab){cur.tab=ds.tab;window.scrollTo(0,0)}
+  else if(ds.go){const n=addDays(cur.day,+ds.go);if(n<=today())cur.day=n}
+  else if(ds.wk)cur.week=addDays(cur.week,+ds.wk);
+  else if(ds.mo){const[y,m]=cur.month.split('-').map(Number);const d=new Date(y,m-1+(+ds.mo),1);cur.month=d.getFullYear()+'-'+pad(d.getMonth()+1)}
+  else if(ds.rg)cur.range=+ds.rg;
+  else if(ds.alc!==undefined){const[o]=getRef('days|'+cur.day+'|alc');o.alc=ds.alc;save()}
+  else if(b.id==='bk'){backup();return}
+  else if(b.id==='rs'){document.getElementById('file').click();return}
+  else return;render()});
+
+async function backup(){const name='glowup-respaldo-'+today()+'.json';const blob=new Blob([JSON.stringify(S,null,1)],{type:'application/json'});
+  const file=new File([blob],name,{type:'application/json'});
+  try{if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:name})}
+  else{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click()}
+  S.lastBackup=Date.now();save();render();toast('Respaldo creado ✓')}catch(e){if(e.name!=='AbortError')toast('No se pudo respaldar')}}
+document.addEventListener('change',e=>{if(e.target.id!=='file')return;const f=e.target.files[0];if(!f)return;const r=new FileReader();
+  r.onload=()=>{try{const d=JSON.parse(r.result);if(!d.days)throw 0;if(confirm('¿Reemplazar los datos actuales por el respaldo del archivo?')){S=Object.assign(structuredClone(DEF),d);save();render();toast('Datos restaurados ✓')}}catch(_){toast('Archivo no válido')}};r.readAsText(f)});
+function toast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1800)}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&cur.tab==='hoy'&&cur.day<today()&&!S.days[today()]){cur.day=today();render()}});
+
+if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js');
+render();
+</script>
+</body>
+</html>
