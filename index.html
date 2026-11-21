@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
-<meta name="theme-color" content="#5c1f3a">
+<meta name="theme-color" content="#0d0a0c">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -12,94 +12,113 @@
 <link rel="manifest" href="manifest.json">
 <title>Glow Up · Deysi</title>
 <style>
-:root{--bg:#f8f3f0;--card:#fff;--ink:#2a1a21;--muted:#8c7b82;--pri:#7a2e4a;--pri2:#b0577a;--gold:#c9a27e;--gold2:#e8c9a6;--ok:#2f7a55;--bad:#b42318;--line:#efe4de;--lab:#1f3b57;--lab2:#3d6a92}
-body.lab{--pri:var(--lab);--pri2:var(--lab2)}
+:root{--bg:#0d0a0c;--bg2:#151013;--card:#1b1519;--card2:#231b20;--ink:#f5ede4;--muted:#a89a9f;--pri:#d9b77e;--pri2:#c8344f;--gold:#d9b77e;--gold2:#f1dcb4;--red:#c8344f;--ok:#7fd1a4;--bad:#ff5d73;--line:#2e252a;--onpri:#1a1013;
+ --serif:"Didot","Bodoni 72","Bodoni MT","Playfair Display",Georgia,serif}
+body.lab{--pri:#c9d3df;--pri2:#5b7896;--onpri:#0f141a}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);font-size:16px;padding-bottom:calc(80px + env(safe-area-inset-bottom))}
-header{background:linear-gradient(135deg,var(--pri),var(--pri2));color:#fff;padding:calc(12px + env(safe-area-inset-top)) 16px 14px;position:sticky;top:0;z-index:5;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+html{background:var(--bg)}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,sans-serif;background:radial-gradient(120% 60% at 50% 0%,#24121a 0%,var(--bg) 60%) fixed;color:var(--ink);font-size:16px;padding-bottom:calc(84px + env(safe-area-inset-bottom));min-height:100vh}
+body.lab{background:radial-gradient(120% 60% at 50% 0%,#141c26 0%,var(--bg) 60%) fixed}
+header{background:linear-gradient(180deg,rgba(13,10,12,.96),rgba(13,10,12,.88));backdrop-filter:blur(10px);padding:calc(10px + env(safe-area-inset-top)) 16px 14px;position:sticky;top:0;z-index:5;border-bottom:1px solid var(--line)}
+.brand{font-family:var(--serif);letter-spacing:6px;font-size:12px;color:var(--gold);text-align:center;margin-bottom:6px}
 .hrow{display:flex;justify-content:space-between;align-items:flex-end;gap:10px}
-header h1{margin:0;font-size:21px;font-weight:700}
-header .sub{font-size:13px;opacity:.85;margin-top:2px}
-.mode{display:flex;background:rgba(255,255,255,.18);border-radius:22px;padding:3px;margin-top:12px}
-.mode button{flex:1;border:0;background:none;color:#fff;font-weight:600;font-size:14px;padding:8px;border-radius:20px;position:relative}
-.mode button.on{background:#fff;color:var(--pri)}
-.badge{display:inline-block;min-width:18px;height:18px;line-height:18px;border-radius:9px;background:var(--bad);color:#fff;font-size:11px;padding:0 5px;margin-left:5px;vertical-align:1px}
-main{padding:12px;max-width:640px;margin:0 auto}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px;box-shadow:0 1px 3px rgba(60,20,40,.04)}
-.card h2{font-size:13px;margin:0 0 10px;color:var(--pri);text-transform:uppercase;letter-spacing:.7px;display:flex;justify-content:space-between;align-items:center}
-.card h2 small{text-transform:none;letter-spacing:0;color:var(--muted);font-weight:500}
-label.f{display:block;font-size:13px;color:var(--muted);margin:10px 0 4px}
-input[type=text],input[type=number],input[type=time],input[type=date],textarea,select{width:100%;font-size:16px;padding:10px 12px;border:1px solid #e2d4cd;border-radius:11px;background:#fff;color:var(--ink);font-family:inherit;-webkit-appearance:none}
+header h1{margin:0;font-family:var(--serif);font-size:27px;font-weight:600;color:var(--ink);letter-spacing:.3px}
+header .sub{font-size:12px;color:var(--muted);margin-top:3px;letter-spacing:1.5px;text-transform:uppercase}
+.mode{display:flex;background:var(--card);border:1px solid var(--line);border-radius:24px;padding:3px;margin-top:12px}
+.mode button{flex:1;border:0;background:none;color:var(--muted);font-weight:600;font-size:14px;padding:8px;border-radius:21px;letter-spacing:.5px}
+.mode button.on{background:linear-gradient(135deg,var(--gold2),var(--pri));color:var(--onpri)}
+.badge{display:inline-block;min-width:18px;height:18px;line-height:18px;border-radius:9px;background:var(--red);color:#fff;font-size:11px;padding:0 5px;margin-left:5px;vertical-align:1px}
+main{padding:14px 12px;max-width:640px;margin:0 auto}
+.card{background:linear-gradient(180deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:12px}
+.card h2{font-family:var(--serif);font-size:17px;font-weight:600;margin:0 0 12px;color:var(--gold);letter-spacing:.4px;display:flex;justify-content:space-between;align-items:center}
+.card h2 small{font-family:-apple-system,sans-serif;font-size:12px;letter-spacing:0;color:var(--muted);font-weight:500}
+label.f{display:block;font-size:12px;color:var(--muted);margin:12px 0 5px;letter-spacing:.6px;text-transform:uppercase}
+input[type=text],input[type=number],input[type=time],input[type=date],textarea,select{width:100%;font-size:16px;padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:var(--bg2);color:var(--ink);font-family:inherit;-webkit-appearance:none;color-scheme:dark}
+input:focus,textarea:focus{outline:none;border-color:var(--gold)}
+::placeholder{color:#6f6268}
 textarea{min-height:64px;resize:vertical}
 .row{display:flex;gap:8px}.row>*{flex:1;min-width:0}
-button{font-family:inherit;font-size:15px;padding:10px 14px;border-radius:11px;border:1px solid var(--pri);background:#fff;color:var(--pri);font-weight:600;cursor:pointer}
-button.p{background:var(--pri);color:#fff}
-button.ghost{border-color:transparent;background:none}
+button{font-family:inherit;font-size:15px;padding:11px 14px;border-radius:12px;border:1px solid var(--pri);background:transparent;color:var(--pri);font-weight:600;cursor:pointer}
+button.p{background:linear-gradient(135deg,var(--gold2),var(--pri));color:var(--onpri);border-color:transparent}
+button.ghost{border-color:transparent}
 button.danger{border-color:var(--bad);color:var(--bad)}
 button.full{width:100%}
 .chips{display:flex;flex-wrap:wrap;gap:7px}
-.chip{border:1px solid #e2d4cd;background:#fff;color:var(--ink);border-radius:20px;padding:7px 13px;font-size:14px;font-weight:500}
-.chip.on{background:var(--pri);border-color:var(--pri);color:#fff}
+.chip{border:1px solid var(--line);background:var(--bg2);color:var(--ink);border-radius:20px;padding:8px 14px;font-size:14px;font-weight:500}
+.chip.on{background:linear-gradient(135deg,var(--gold2),var(--pri));border-color:transparent;color:var(--onpri)}
 .habits{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.hab{border:1.5px solid var(--line);border-radius:14px;padding:12px 10px;background:#fff;text-align:left;color:var(--ink);font-weight:500;font-size:14px;display:flex;gap:8px;align-items:center;min-height:58px}
+.hab{border:1px solid var(--line);border-radius:15px;padding:12px 10px;background:var(--bg2);text-align:left;color:var(--ink);font-weight:500;font-size:14px;display:flex;gap:8px;align-items:center;min-height:60px;transition:all .2s}
 .hab .ic{font-size:22px}
-.hab.on{border-color:var(--pri);background:linear-gradient(135deg,#fbeef3,#fff)}
-.hab.on::after{content:"✓";margin-left:auto;color:var(--pri);font-weight:800}
-.hero{display:flex;gap:14px;align-items:center}
+.hab.on{border-color:var(--gold);background:linear-gradient(135deg,rgba(217,183,126,.18),rgba(200,52,79,.12));box-shadow:0 0 14px rgba(217,183,126,.15)}
+.hab.on::after{content:"✦";margin-left:auto;color:var(--gold);font-weight:800}
+.hero{display:flex;gap:16px;align-items:center}
 .ring{flex:none}
 .hero .t{font-size:14px;color:var(--muted);line-height:1.45}
-.hero .t b{color:var(--ink);font-size:17px;display:block}
+.hero .t b{color:var(--ink);font-family:var(--serif);font-size:20px;display:block;font-weight:600}
 .kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
-.kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px}
-.kpi .v{font-size:22px;font-weight:700;color:var(--pri)}
-.kpi .l{font-size:12px;color:var(--muted);margin-top:2px}
-.note{font-size:13px;color:var(--muted);line-height:1.45}
-.alert{background:#fdecec;border:1px solid #f3c3c3;color:#7d1a1a;border-radius:12px;padding:10px 12px;font-size:13px;line-height:1.45}
-.tip{background:#fbf3ea;border:1px solid #efd9c1;border-radius:12px;padding:10px 12px;font-size:13px;line-height:1.45;margin-bottom:10px}
+.kpi{background:linear-gradient(180deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:16px;padding:13px}
+.kpi .v{font-family:var(--serif);font-size:25px;font-weight:600;color:var(--gold)}
+.kpi .l{font-size:12px;color:var(--muted);margin-top:3px}
+.note{font-size:13px;color:var(--muted);line-height:1.5}
+.alert{background:rgba(200,52,79,.12);border:1px solid rgba(255,93,115,.35);color:#ffc7cf;border-radius:14px;padding:11px 13px;font-size:13px;line-height:1.5}
+.tip{background:rgba(217,183,126,.08);border:1px solid rgba(217,183,126,.25);color:var(--ink);border-radius:14px;padding:11px 13px;font-size:13px;line-height:1.5;margin-bottom:10px}
 .avisos .tip{display:flex;gap:8px;align-items:flex-start}
+.mentor{border:1px solid rgba(217,183,126,.45);background:linear-gradient(160deg,#2a1820 0%,#17111a 70%);position:relative;overflow:hidden}
+.mentor::before{content:"";position:absolute;right:-40px;top:-40px;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle,rgba(200,52,79,.35),transparent 70%)}
+body.lab .mentor{background:linear-gradient(160deg,#16202b 0%,#11161d 70%)}
+body.lab .mentor::before{background:radial-gradient(circle,rgba(91,120,150,.4),transparent 70%)}
+.mentor .who{font-family:var(--serif);color:var(--gold);font-size:13px;letter-spacing:3px;text-transform:uppercase;margin-bottom:10px}
+.msg{font-family:var(--serif);font-size:18px;line-height:1.4;color:var(--ink);margin:0 0 12px;position:relative}
+.msg:last-child{margin-bottom:0}
+.msg .tag{display:block;font-family:-apple-system,sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--red);margin-bottom:3px;font-weight:700}
+.msg.good .tag{color:var(--ok)}
+.msg .do{display:block;font-family:-apple-system,sans-serif;font-size:13px;color:var(--gold2);margin-top:5px}
 .nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.nav b{font-size:15px}.nav button{padding:8px 14px}
-.task{display:flex;gap:10px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--line)}
+.nav b{font-family:var(--serif);font-size:17px;font-weight:600}.nav button{padding:8px 14px}
+.task{display:flex;gap:10px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line)}
 .task:last-child{border-bottom:0}
-.task .ck{width:26px;height:26px;border-radius:50%;border:2px solid #cdbbb3;flex:none;background:#fff;padding:0;margin-top:1px}
-.task.done .ck{background:var(--ok);border-color:var(--ok);color:#fff}
+.task .ck{width:26px;height:26px;border-radius:50%;border:1.5px solid #5d4f55;flex:none;background:transparent;padding:0;margin-top:1px;color:var(--onpri)}
+.task.done .ck{background:var(--gold);border-color:var(--gold)}
 .task.done .ck::after{content:"✓";font-size:14px}
 .task .b{flex:1;min-width:0}
 .task .tt{font-size:15px;font-weight:500;word-break:break-word}
 .task.done .tt{text-decoration:line-through;color:var(--muted)}
 .task .mt{font-size:12px;color:var(--muted);margin-top:3px}
 .task .mt .od{color:var(--bad);font-weight:600}
-.pr{width:4px;align-self:stretch;border-radius:2px;flex:none}
-.pr.alta{background:var(--bad)}.pr.media{background:var(--gold)}.pr.baja{background:#cfd8dc}
-.empty{text-align:center;color:var(--muted);font-size:14px;padding:18px 0}
-.fab{position:fixed;right:18px;bottom:calc(84px + env(safe-area-inset-bottom));width:56px;height:56px;border-radius:50%;background:var(--pri);color:#fff;font-size:30px;border:0;box-shadow:0 6px 18px rgba(0,0,0,.22);z-index:8;padding:0;line-height:56px}
-.mv{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);font-size:15px}
+.pr{width:3px;align-self:stretch;border-radius:2px;flex:none}
+.pr.alta{background:var(--red)}.pr.media{background:var(--gold)}.pr.baja{background:#4d4247}
+.empty{text-align:center;color:var(--muted);font-size:14px;padding:18px 0;font-style:italic}
+.fab{position:fixed;right:18px;bottom:calc(88px + env(safe-area-inset-bottom));width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,var(--gold2),var(--pri));color:var(--onpri);font-size:30px;border:0;box-shadow:0 8px 24px rgba(0,0,0,.5),0 0 18px rgba(217,183,126,.25);z-index:8;padding:0;line-height:58px}
+.mv{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--line);font-size:15px}
 .mv:last-child{border-bottom:0}.mv small{display:block;color:var(--muted);font-size:12px}
 .neg{color:var(--bad);font-weight:600}.pos{color:var(--ok);font-weight:600}
-.bar{height:8px;background:#f1e7e2;border-radius:4px;overflow:hidden;margin-top:4px}.bar i{display:block;height:100%;background:var(--pri2)}
-.menu button{display:flex;width:100%;justify-content:space-between;align-items:center;border:0;border-bottom:1px solid var(--line);border-radius:0;padding:15px 4px;background:none;color:var(--ink);font-weight:500;font-size:16px}
-.menu button:last-child{border-bottom:0}.menu button::after{content:"›";color:var(--muted);font-size:20px}
+.bar{height:7px;background:var(--bg2);border-radius:4px;overflow:hidden;margin-top:5px}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--red),var(--gold))}
+.menu button{display:flex;text-align:left;gap:8px;width:100%;justify-content:space-between;align-items:center;border:0;border-bottom:1px solid var(--line);border-radius:0;padding:16px 4px;background:none;color:var(--ink);font-weight:500;font-size:16px}
+.menu button:last-child{border-bottom:0}.menu button::after{content:"›";color:var(--gold);font-size:20px}
 .ed{display:flex;gap:6px;align-items:center;margin-bottom:6px}.ed input[type=text]{flex:1}.ed .ico{width:52px;text-align:center;flex:none}
 .ed button{padding:8px 11px}
-.counter{display:flex;align-items:center;gap:14px;justify-content:center}.counter button{width:46px;height:46px;border-radius:50%;font-size:22px;padding:0}.counter b{font-size:30px;min-width:50px;text-align:center;color:var(--pri)}
+.counter{display:flex;align-items:center;gap:16px;justify-content:center}.counter button{width:48px;height:48px;border-radius:50%;font-size:22px;padding:0}.counter b{font-family:var(--serif);font-size:36px;min-width:50px;text-align:center;color:var(--gold)}
 .hidden{display:none!important}
-nav.tabs{position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.97);backdrop-filter:blur(8px);border-top:1px solid var(--line);display:flex;padding-bottom:env(safe-area-inset-bottom);z-index:10}
-nav.tabs button{flex:1;border:0;border-radius:0;background:none;color:var(--muted);font-size:11px;padding:8px 0 9px;font-weight:600}
-nav.tabs button span{display:block;font-size:21px;margin-bottom:1px}
-nav.tabs button.on{color:var(--pri)}
-.ov{position:fixed;inset:0;background:rgba(30,10,20,.42);z-index:20;display:flex;align-items:flex-end}
-.sheet{background:var(--bg);width:100%;max-height:92vh;overflow:auto;border-radius:20px 20px 0 0;padding:16px 16px calc(20px + env(safe-area-inset-bottom));animation:up .22s ease}
+nav.tabs{position:fixed;bottom:0;left:0;right:0;background:rgba(13,10,12,.94);backdrop-filter:blur(12px);border-top:1px solid var(--line);display:flex;padding-bottom:env(safe-area-inset-bottom);z-index:10}
+nav.tabs button{flex:1;border:0;border-radius:0;background:none;color:#7d6f75;font-size:10px;padding:9px 0 9px;font-weight:600;letter-spacing:.8px;text-transform:uppercase}
+nav.tabs button span{display:block;font-size:20px;margin-bottom:2px;letter-spacing:0}
+nav.tabs button.on{color:var(--gold)}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:20;display:flex;align-items:flex-end}
+.sheet{background:var(--bg2);border-top:1px solid var(--gold);width:100%;max-height:92vh;overflow:auto;border-radius:22px 22px 0 0;padding:18px 16px calc(22px + env(safe-area-inset-bottom));animation:up .22s ease}
 @keyframes up{from{transform:translateY(40px);opacity:.4}to{transform:none;opacity:1}}
-.sheet h3{margin:0 0 6px;font-size:18px;color:var(--pri)}
+.sheet h3{margin:0 0 6px;font-family:var(--serif);font-size:22px;font-weight:600;color:var(--gold)}
+.sheet .card{background:var(--card)}
 .sheet .acts{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}.sheet .acts button{flex:1}
 svg text{font-size:10px;fill:var(--muted)}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(150px + env(safe-area-inset-bottom));background:var(--ink);color:#fff;padding:9px 16px;border-radius:20px;font-size:14px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:30}
-.toast.show{opacity:.94}
-.quote{font-style:italic;font-size:14px;color:var(--ink);border-left:3px solid var(--gold);padding-left:10px;line-height:1.45}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(156px + env(safe-area-inset-bottom));background:linear-gradient(135deg,var(--gold2),var(--pri));color:var(--onpri);padding:10px 18px;border-radius:22px;font-size:14px;font-weight:600;opacity:0;transition:opacity .3s;pointer-events:none;z-index:30}
+.toast.show{opacity:.97}
+.quote{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--gold2);border-left:2px solid var(--red);padding-left:10px;line-height:1.45}
+input[type=checkbox]{accent-color:var(--gold)}
 </style>
 </head>
 <body>
 <header>
+  <div class="brand">✦ G L O W &nbsp; U P ✦</div>
   <div class="hrow"><div><h1 id="hello">Hola, Deysi</h1><div class="sub" id="sub"></div></div></div>
   <div class="mode"><button data-mode="personal" class="on">✦ Personal<span id="bp"></span></button><button data-mode="laboral">💼 Laboral<span id="bl"></span></button></div>
 </header>
@@ -183,7 +202,7 @@ function tasks(area,f){const T=today();let L=S.tasks.filter(t=>t.area===area);
 function monthMoves(M){return S.moves.filter(m=>m.date&&m.date.slice(0,7)===M)}
 
 /* ===== Componentes ===== */
-function ring(p,size=74,txt){const r=size/2-7,c=2*Math.PI*r;return `<svg class="ring" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}"><circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="#f1e4ea" stroke-width="7"/><circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="var(--pri)" stroke-width="7" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${c*(1-p)}" transform="rotate(-90 ${size/2} ${size/2})"/><text x="50%" y="54%" text-anchor="middle" style="font-size:17px;font-weight:700;fill:var(--ink)">${txt??Math.round(p*100)+'%'}</text></svg>`}
+function ring(p,size=74,txt){const r=size/2-7,c=2*Math.PI*r;return `<svg class="ring" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}"><defs><linearGradient id="gg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f1dcb4"/><stop offset="1" stop-color="#c8344f"/></linearGradient></defs><circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="#2e252a" stroke-width="7"/><circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="url(#gg)" stroke-width="7" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${c*(1-p)}" transform="rotate(-90 ${size/2} ${size/2})"/><text x="50%" y="54%" text-anchor="middle" style="font-size:19px;font-weight:600;fill:#f5ede4;font-family:Didot,Bodoni 72,Georgia,serif">${txt??Math.round(p*100)+'%'}</text></svg>`}
 function taskRow(t){const tp=[t.type,t.cliente].filter(Boolean).join(' · ');const when=t.due?(isOver(t)?`<span class="od">Vencido ${fmtS(t.due)}</span>`:fmtS(t.due))+(t.time?' '+t.time:''):'Sin fecha';
   return `<div class="task ${t.done?'done':''}"><div class="pr ${t.prio||'media'}"></div><button class="ck" data-act="tdone" data-id="${t.id}"></button><div class="b" data-act="tedit" data-id="${t.id}"><div class="tt">${esc(t.title)}</div><div class="mt">${when}${tp?' · '+esc(tp):''}${t.repeat&&t.repeat!=='no'?' · 🔁 '+t.repeat:''}</div></div></div>`}
 function taskList(L,empty='Nada pendiente aquí ✨'){return L.length?L.map(taskRow).join(''):`<div class="empty">${empty}</div>`}
@@ -204,11 +223,49 @@ function avisos(area){const a=[];const T=today(),y=addDays(T,-1);
     if(new Date().getDay()===0&&!S.weeks[monday(T)]?.q1)a.push(['🗓️','Hoy toca <b>revisión semanal</b> (Más → Semana).']);}
   return a.length?`<div class="avisos">${a.map(([i,t])=>`<div class="tip"><span>${i}</span><span>${t}</span></div>`).join('')}</div>`:''}
 
+
+/* ===== MENTORA: mensajes según tus datos reales ===== */
+function mentora(area){const T=today(),y=addDays(T,-1),L7=[...Array(7)].map((_,i)=>addDays(T,i-6)),P7=L7.slice(0,6),h=new Date().getHours();const out=[];
+  const M=T.slice(0,7),mm=monthMoves(M),gas=mm.filter(x=>x.kind==='gasto').reduce((a,x)=>a+(+x.amount||0),0),ing=mm.filter(x=>x.kind==='ingreso').reduce((a,x)=>a+(+x.amount||0),0);
+  const add=(pr,tag,txt,doit,good)=>out.push({pr,tag,txt,doit,good});
+  if(area==='personal'){
+    const alc7=L7.filter(k=>D(k).alc==='si').length,std7=L7.reduce((a,k)=>a+stdDrinks(D(k)),0);
+    const cita=Object.values(S.weeks).some(w=>w.cita)||S.tasks.some(t=>/cita/i.test(t.title)&&t.done);
+    if(alc7>=4)add(1,'Salud',`Bebiste ${alc7} de los últimos 7 días (${std7.toFixed(1)} tragos estándar). Esto ya no es un tema de voluntad: es salud.`,cita?'Sigue las indicaciones médicas y registra cada día.':'Hoy: llama y agenda tu valoración médica. Es tu prioridad 1.');
+    else if(!cita)add(3,'Salud','Tu prioridad número 1 sigue siendo la valoración médica sobre el alcohol. ¿Ya la agendaste?','Crea la tarea en la pestaña Alcohol y ponle fecha esta semana.');
+    if(!D(y).alc&&!D(T).alc)add(2,'Honestidad','No registraste el alcohol de ayer. Lo que no mides, no lo puedes cambiar.','Pestaña Alcohol → día anterior → 30 segundos.');
+    const noMove=[0,1,2].every(i=>!D(addDays(T,-i-1)).h_move)&&!D(T).h_move;
+    if(noMove&&Object.keys(S.days).length>=3)add(4,'Cuerpo','Llevas 3 días sin moverte. No necesitas un plan perfecto: necesitas 20 minutos hoy.','Pon tu canción favorita y baila 20 min. Cuenta.');
+    const rd=L7.map(k=>num(D(k).redes)).filter(v=>v!=null);if(rd.length>=2){const av=rd.reduce((a,b)=>a+b,0)/rd.length;if(av>S.settings.redesMax)add(5,'Disciplina',`Promedias ${Math.round(av)} min al día en redes: ${Math.round(av-S.settings.redesMax)} min sobre tu límite. Ahí está tu hora de Glow Up.`,'Deja el teléfono fuera del cuarto esta noche.')}
+    if(ing&&gas>ing)add(2,'Dinero',`Este mes gastaste ${money(gas)} y ganaste ${money(ing)}. No es momento de compras: es momento de cortar.`,'Revisa en Dinero tu categoría más alta y recórtala esta semana.');
+    const ocio=mm.filter(x=>x.kind==='gasto'&&/salida|alcohol/i.test(x.cat)).reduce((a,x)=>a+(+x.amount||0),0);if(gas>0&&ocio/gas>=.25)add(3,'Dinero',`El ${Math.round(ocio/gas*100)}% de tus gastos del mes se fue en salidas y alcohol.`,'Define un tope semanal para salidas y respétalo.');
+    if(!S.debts.length)add(4,'Dinero','Aún no registras tus deudas. No puedes pagar lo que no quieres ver.','Dinero → Agregar deuda, con saldo y cuota. 5 minutos.');
+    const lastMv=S.moves.map(m=>m.date).sort().pop();if(S.moves.length&&lastMv<addDays(T,-3))add(5,'Dinero','Hace más de 3 días que no anotas un gasto. ¿De verdad no gastaste nada?','Anota hoy lo que recuerdes de estos días.');
+    if(!D(T).prioridad&&h>=10)add(4,'Enfoque',`Son las ${h}:00 y no definiste tu prioridad. Sin prioridad, el día lo deciden otros.`,'Escríbela arriba: una sola cosa.');
+    const sl=L7.map(k=>sleepHours(D(k))).filter(Boolean);if(sl.length>=3){const a=sl.reduce((x,z)=>x+z,0)/sl.length;if(a<6.5)add(5,'Descanso',`Duermes ${a.toFixed(1)} h en promedio. Con ese sueño la disciplina se vuelve cuesta arriba.`,`Meta de esta semana: acostarte a las ${S.settings.sleepGoal}.`)}
+    const ovP=S.tasks.filter(t=>t.area==='personal'&&isOver(t)).length;if(ovP>=3)add(5,'Orden',`Acumulas ${ovP} tareas personales vencidas. Estás postergando, no organizando.`,'Elige una, hazla en 15 minutos, y reprograma o borra el resto.');
+    const st=streak();if(st>=3)add(9,'Reconocimiento',`Racha de ${st} días seguidos. Eso es disciplina real, no motivación.`,'',true);
+    if(habitPct(D(T))===1)add(8,'Reconocimiento','Cumpliste todos tus hábitos hoy. Así se ve una mujer que cumple lo que promete.','',true);
+    if(alc7===0&&L7.filter(k=>D(k).alc==='no').length>=5)add(8,'Reconocimiento','Una semana sin alcohol registrada. Eso merece reconocimiento, y seguimiento médico para sostenerlo.','',true);
+  }else{
+    const ovL=S.tasks.filter(t=>t.area==='laboral'&&isOver(t));
+    if(ovL.length)add(1,'Clientes',`Tienes ${ovL.length} pendiente(s) vencido(s)${ovL[0].cliente?', empezando por '+ovL[0].cliente:''}. Un seguimiento hoy vale más que una propuesta perfecta mañana.`,'Cierra el más antiguo antes de las 11:00.');
+    const wd=[...Array(7)].map((_,i)=>addDays(T,i-6)).filter(k=>{const g=parse(k).getDay();return g>0&&g<6});const sg=wd.reduce((a,k)=>a+(num(D(k).seg)||0),0);
+    if(wd.length>=3&&sg===0)add(2,'Seguimiento','Cero seguimientos registrados en la semana. Tu debilidad declarada es el seguimiento: aquí se nota.','Meta de hoy: 5 seguimientos. Cuéntalos con el botón +.');
+    else if(sg>=15)add(8,'Reconocimiento',`${sg} seguimientos esta semana. Así se construye un pipeline.`,'',true);
+    const sinFecha=S.tasks.filter(t=>t.area==='laboral'&&!t.done&&!t.due).length;if(sinFecha>=2)add(4,'Orden',`${sinFecha} pendientes sin fecha. Lo que no tiene fecha, no se hace.`,'Ponle fecha a cada uno ahora.');
+    const open=S.tasks.filter(t=>t.area==='laboral'&&!t.done).length;if(!open)add(5,'Pipeline','No tienes pendientes laborales abiertos. ¿De verdad no hay clientes que seguir, o no los anotaste?','Revisa Bitrix24 y anota tus 3 próximos seguimientos.');
+    if(!D(T).lfoco&&h>=9&&h<18)add(4,'Enfoque','No definiste tu foco laboral de hoy.','Una frase: qué cliente o qué cierre mueve tu mes.');
+  }
+  out.sort((a,b)=>a.pr-b.pr);const bad=out.filter(x=>!x.good).slice(0,2),good=out.filter(x=>x.good).slice(0,1);let L=[...bad,...good];
+  if(!L.length)L=[{tag:'Hoy',txt:QUOTES[parse(T).getDate()%QUOTES.length],doit:'',good:true}];
+  return `<div class="card mentor"><div class="who">✦ Tu mentora dice</div>${L.map(m=>`<p class="msg ${m.good?'good':''}"><span class="tag">${m.tag}</span>${m.txt}${m.doit?`<span class="do">→ ${m.doit}</span>`:''}</p>`).join('')}</div>`}
+
 /* ===== PERSONAL ===== */
 function pHoy(){const T=today(),p='days|'+T+'|',d=D(T),hp=habitPct(d),st=streak();const q=QUOTES[parse(T).getDate()%QUOTES.length];
   const hab=habitsOn().map(h=>`<button class="hab ${d[h.id]?'on':''}" data-act="hab" data-id="${h.id}"><span class="ic">${h.ic}</span>${esc(h.name)}</button>`).join('');
-  return `${avisos('personal')}
-  <div class="card"><div class="hero">${ring(hp)}<div class="t"><b>${st?`🔥 Racha de ${st} día${st>1?'s':''}`:'Empieza tu racha hoy'}</b>${habitsOn().filter(h=>d[h.id]).length} de ${habitsOn().length} hábitos cumplidos<div class="quote" style="margin-top:6px">${q}</div></div></div></div>
+  return `${mentora('personal')}${avisos('personal')}
+  <div class="card"><div class="hero">${ring(hp)}<div class="t"><b>${st?`🔥 Racha de ${st} día${st>1?'s':''}`:'Empieza tu racha hoy'}</b>${habitsOn().filter(h=>d[h.id]).length} de ${habitsOn().length} hábitos cumplidos</div></div></div>
   <div class="card"><h2>Mi única prioridad de hoy</h2>${inp(p+'prioridad','text','Lo que sí o sí se hace hoy')}</div>
   <div class="card"><h2>Hábitos <small>toca para marcar</small></h2><div class="habits">${hab}</div></div>
   <div class="card"><h2>Tareas personales <small>${tasks('personal','hoy').length} hoy</small></h2>${taskList(tasks('personal','hoy').slice(0,6),'Sin tareas para hoy. Toca + para agregar.')}</div>
@@ -220,7 +277,7 @@ function pHoy(){const T=today(),p='days|'+T+'|',d=D(T),hp=habitPct(d),st=streak(
 
 function pTareas(){const f=cur.tf;const F=[['hoy','Hoy'],['pend','Todas'],['prox','Próximas'],['venc','Vencidas'],['hech','Hechas']];
   return `<div class="chips" style="margin-bottom:12px">${F.map(([v,l])=>`<button class="chip ${f===v?'on':''}" data-set="tf" data-v="${v}">${l}${v==='venc'&&tasks('personal','venc').length?` (${tasks('personal','venc').length})`:''}</button>`).join('')}</div>
-  <div class="card">${taskList(tasks('personal',f))}</div><p class="note">Toca una tarea para editarla o crear su recordatorio en el iPhone.</p>`}
+  <div class="card">${taskList(tasks('personal',f))}</div><p class="note">Toca una tarea para editarla.</p>`}
 
 function pDinero(){const M=cur.month,L=monthMoves(M).sort((a,b)=>b.date.localeCompare(a.date));const[y,m]=M.split('-');
   const ing=L.filter(x=>x.kind==='ingreso').reduce((a,x)=>a+(+x.amount||0),0),gas=L.filter(x=>x.kind==='gasto').reduce((a,x)=>a+(+x.amount||0),0),fl=ing-gas;
@@ -251,7 +308,7 @@ function pAlcohol(){const K=cur.day,p='days|'+K+'|',d=D(K),isT=K===today();
     <label class="f">¿Qué lo detonó? (opcional)</label>${inp(p+'alc_trig','text','Estrés, compromiso, aburrimiento…')}
     <label class="f">Al día siguiente: consecuencias</label>${area(p+'alc_cons','Sueño, ánimo, gastos, discusiones, temblor, sudoración…')}
     <div class="note" id="alccalc" style="margin-top:8px;color:var(--ink)"></div></div></div>
-  <div class="card"><h2>Últimos 14 días <small>tragos estándar</small></h2>${bars(ds.map(k=>[parse(k).getDate(),+stdDrinks(D(k)).toFixed(1)]),'#c9a27e')}<p class="note">${sin} día(s) sin alcohol esta semana. Muestra esta gráfica en tu consulta.</p></div>
+  <div class="card"><h2>Últimos 14 días <small>tragos estándar</small></h2>${bars(ds.map(k=>[parse(k).getDate(),+stdDrinks(D(k)).toFixed(1)]),'#d9b77e')}<p class="note">${sin} día(s) sin alcohol esta semana. Muestra esta gráfica en tu consulta.</p></div>
   <div class="card"><h2>Plan profesional</h2><label class="chk" style="display:flex;gap:10px;align-items:center;font-size:15px"><input type="checkbox" style="width:22px;height:22px;accent-color:var(--pri)" data-k="${W}cita" ${val(W+'cita')?'checked':''}> Tengo cita médica agendada o realizada</label>
    <label class="f">Indicaciones del médico</label>${area(W+'cita_nota')}
    <button class="full" style="margin-top:10px" data-act="quick" data-v="cita">+ Crear tarea: agendar cita médica</button></div>
@@ -259,7 +316,7 @@ function pAlcohol(){const K=cur.day,p='days|'+K+'|',d=D(K),isT=K===today();
 
 /* ===== LABORAL ===== */
 function lHoy(){const T=today(),p='days|'+T+'|',d=D(T),ov=tasks('laboral','venc'),hoy=S.tasks.filter(t=>t.area==='laboral'&&isToday(t)),doneT=S.tasks.filter(t=>t.area==='laboral'&&t.done&&(t.doneAt||'').slice(0,10)===T).length;
-  return `${avisos('laboral')}
+  return `${mentora('laboral')}${avisos('laboral')}
   <div class="kpis"><div class="kpi"><div class="v" style="color:${ov.length?'var(--bad)':'var(--ok)'}">${ov.length}</div><div class="l">Vencidos</div></div><div class="kpi"><div class="v">${hoy.length}</div><div class="l">Para hoy</div></div>
   <div class="kpi"><div class="v">${doneT}</div><div class="l">Cerrados hoy</div></div><div class="kpi"><div class="v">${tasks('laboral','prox').length}</div><div class="l">Próximos</div></div></div>
   <div class="card"><h2>Seguimientos comerciales hechos hoy</h2><div class="counter"><button data-act="seg" data-v="-1">−</button><b>${num(d.seg)||0}</b><button class="p" data-act="seg" data-v="1">+</button></div></div>
@@ -279,14 +336,14 @@ function lResumen(){const W=monday(today()),wk=[...Array(7)].map((_,i)=>addDays(
   return `<p class="note" style="margin:0 0 10px">Semana ${fmt(W)} – ${fmt(addDays(W,6))}</p>
   <div class="kpis"><div class="kpi"><div class="v">${done.length}</div><div class="l">Pendientes cerrados</div></div><div class="kpi"><div class="v">${seg}</div><div class="l">Seguimientos hechos</div></div>
   <div class="kpi"><div class="v" style="color:${lab.filter(isOver).length?'var(--bad)':'var(--ok)'}">${lab.filter(isOver).length}</div><div class="l">Vencidos ahora</div></div><div class="kpi"><div class="v">${lab.filter(t=>!t.done).length}</div><div class="l">Abiertos</div></div></div>
-  <div class="card"><h2>Seguimientos por día</h2>${bars(wk.map(k=>[DOW[parse(k).getDay()].slice(0,2),num(D(k).seg)||0]),'#3d6a92')}</div>
+  <div class="card"><h2>Seguimientos por día</h2>${bars(wk.map(k=>[DOW[parse(k).getDay()].slice(0,2),num(D(k).seg)||0]),'#5b7896')}</div>
   <div class="card"><h2>Cerrado esta semana por tipo</h2>${Object.entries(byT).map(([k,v])=>`<div class="mv"><span>${esc(k)}</span><b>${v}</b></div>`).join('')||'<div class="empty">Aún nada cerrado esta semana.</div>'}</div>
   <div class="card"><h2>Clientes con pendientes abiertos</h2>${Object.entries(cl).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<div class="mv"><span>${esc(k)}</span><b>${v}</b></div>`).join('')||'<div class="empty">Sin pendientes con cliente asignado.</div>'}</div>`}
 
 /* ===== MÁS (compartido) ===== */
 function vMas(){if(cur.sub)return({semana:vSemana,tablero:vTablero,ajustes:vAjustes,listas:vListas,record:vRecord,respaldo:vRespaldo})[cur.sub]();
   return `<div class="card menu">
-   <button data-sub="semana">🗓️ Revisión semanal</button><button data-sub="tablero">📊 Tablero de mi vida</button><button data-sub="record">⏰ Recordatorios en el iPhone</button>
+   <button data-sub="semana">🗓️ Revisión semanal</button><button data-sub="tablero">📊 Tablero de mi vida</button><button data-sub="record">⏰ Cómo poner recordatorios</button>
    <button data-sub="listas">✏️ Editar hábitos, categorías y tipos</button><button data-sub="ajustes">⚙️ Metas y ajustes</button><button data-sub="respaldo">💾 Respaldo de datos</button></div>
    <p class="note" style="text-align:center">Tus datos viven solo en este iPhone.</p>`}
 const back=t=>`<div class="nav"><button data-sub="">‹ Más</button><b>${t}</b><span style="width:60px"></span></div>`;
@@ -310,7 +367,7 @@ function vTablero(){const n=cur.range,ds=[...Array(n)].map((_,i)=>addDays(today(
   <div class="kpi"><div class="v">${alc}</div><div class="l">Días con alcohol · ${std.toFixed(1)} tragos est.</div></div><div class="kpi"><div class="v">${sN?(slp/sN).toFixed(1):'—'} h</div><div class="l">Sueño promedio</div></div>
   <div class="kpi"><div class="v">${rN?Math.round(red/rN):'—'}</div><div class="l">Min/día en redes</div></div><div class="kpi"><div class="v">${money(gas)}</div><div class="l">Gastos registrados</div></div>
   <div class="kpi"><div class="v">${dn(pt)}</div><div class="l">Tareas personales hechas</div></div><div class="kpi"><div class="v">${dn(lt)} · ${seg}</div><div class="l">Pendientes laborales · seguimientos</div></div></div>
-  <div class="card"><h2>Hábitos por día</h2>${bars(ds.slice(-14).map(k=>[parse(k).getDate(),Math.round(habitPct(D(k))*100)]),'#b0577a')}</div>
+  <div class="card"><h2>Hábitos por día</h2>${bars(ds.slice(-14).map(k=>[parse(k).getDate(),Math.round(habitPct(D(k))*100)]),'#c8344f')}</div>
   <div class="card"><h2>Peso semanal (lb)</h2>${line(peso,'lb')}<p class="note">El peso es complementario: mira también fuerza y constancia.</p></div>`}
 
 function editList(key,title,withIcon){const L=S[key];return `<div class="card"><h2>${title}</h2>${L.map((it,i)=>withIcon?
@@ -325,14 +382,12 @@ function vAjustes(){const p='settings|';return `${back('Ajustes')}
    <label class="f">Límite diario de redes (min)</label>${inp(p+'redesMax','number')}</div>
   <div class="card"><h2>Alcohol · valores por defecto</h2><div class="row"><div><label class="f">ml por trago</label>${inp(p+'mlTrago','number')}</div><div><label class="f">Graduación % (etiqueta)</label>${inp(p+'grad','number')}</div></div></div>`}
 function vRecord(){return `${back('Recordatorios')}
-  <div class="tip">El iPhone no deja que una app web suene sola. Por eso cada recordatorio se crea como <b>alarma en tu app Calendario</b>: toca el botón y luego "Agregar". Ese aviso sí suena.</div>
-  <div class="card menu">
-   <button data-act="rem" data-v="dia">🌙 Registrar mi día · todos los días 21:30</button>
-   <button data-act="rem" data-v="manana">☀️ Elegir mi prioridad · lun–vie 07:45</button>
-   <button data-act="rem" data-v="gasto">💸 Anotar gastos del día · todos los días 20:00</button>
-   <button data-act="rem" data-v="semana">🗓️ Revisión semanal + respaldo · domingos 19:00</button>
-   <button data-act="rem" data-v="seg">💼 Revisar pendientes laborales · lun–vie 08:30</button></div>
-  <p class="note">Para una tarea concreta: ábrela y toca "⏰ Recordatorio en iPhone".</p>`}
+  <div class="tip">El iPhone no deja que una app web suene sola. Configura estos avisos <b>una sola vez</b> en la app <b>Recordatorios</b> del iPhone y sonarán automáticamente para siempre.</div>
+  <div class="card"><h2>Cómo crear cada uno</h2><p class="note" style="margin:0">1. Abre la app <b>Recordatorios</b> → "Nuevo recordatorio".<br>2. Escribe el título.<br>3. Toca el ícono de calendario sobre el teclado → activa <b>Fecha</b> y <b>Hora</b>.<br>4. <b>Repetir</b> → elige la frecuencia → OK.</p></div>
+  <div class="card"><h2>Los que te recomiendo</h2>
+   <div class="mv"><div>🌙 Glow Up: registrar mi día<small>Cada día · 21:30</small></div></div>
+   <div class="mv"><div>🗓️ Glow Up: revisión semanal + respaldo<small>Cada semana · domingo 19:00</small></div></div>
+   <p class="note" style="margin-top:10px">Empieza solo con estos dos. Más avisos = más avisos ignorados.</p></div>`}
 function vRespaldo(){return `${back('Respaldo')}<div class="card"><p class="note" style="margin-top:0">Tus datos están solo en este iPhone. Respalda cada domingo y guarda el archivo en iCloud Drive.</p>
   <div class="row"><button class="p" data-act="backup">Respaldar</button><button data-act="restore">Restaurar</button></div><input type="file" id="file" accept=".json,application/json" class="hidden">
   <p class="note">Último respaldo: ${S.lastBackup?new Date(S.lastBackup).toLocaleDateString('es-EC'):'nunca'}</p></div>`}
@@ -350,7 +405,7 @@ function drawSheet(){if(!sheetKind)return;let h='';
     <label class="f">Repetir</label>${chips('repeat',[['no','No'],['diario','Diario'],['semanal','Semanal'],['mensual','Mensual']])}
     <label class="f">Notas</label><textarea data-d="notes">${esc(draft.notes)}</textarea>
     <div class="acts"><button data-act="close">Cancelar</button><button class="p" data-act="tsave">Guardar</button></div>
-    <div class="acts" style="margin-top:8px"><button data-act="tics">⏰ Recordatorio en iPhone</button>${draft.id?'<button class="danger" data-act="tdel">Eliminar</button>':''}</div>`}
+    ${draft.id?'<div class="acts" style="margin-top:8px"><button class="danger" data-act="tdel">Eliminar</button></div>':''}`}
   if(sheetKind==='move'){const g=draft.kind==='gasto';h=`<h3>${draft.id?'Editar':'Nuevo'} ${g?'gasto':'ingreso'}</h3>
     ${chips('kind',[['gasto','Gasto'],['ingreso','Ingreso']])}
     <label class="f">Monto (USD)</label><input type="number" inputmode="decimal" step="any" data-d="amount" value="${esc(draft.amount)}" placeholder="0,00" id="amt" style="font-size:24px;font-weight:700">
@@ -448,7 +503,7 @@ function render(){const lab=cur.mode==='laboral';document.body.classList.toggle(
   const h=new Date().getHours();document.getElementById('hello').textContent=(h<12?'Buenos días':h<19?'Buenas tardes':'Buenas noches')+', '+(S.settings.nombre||'Deysi');
   document.getElementById('sub').textContent=DOW[new Date().getDay()]+' '+fmt(today());
   document.getElementById('fab').classList.toggle('hidden',['mas','alcohol','resumen'].includes(cur.tab));
-  document.querySelector('meta[name=theme-color]').content=lab?'#1f3b57':'#5c1f3a';live()}
+  document.querySelector('meta[name=theme-color]').content=lab?'#0d0a0c':'#0d0a0c';live()}
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)render()});
 if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js');
 render();
