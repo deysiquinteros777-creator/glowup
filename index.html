@@ -366,11 +366,13 @@ function drawSheet(){if(!sheetKind)return;let h='';
   const a=document.getElementById('amt');if(a&&!draft.amount)setTimeout(()=>a.focus(),250)}
 
 /* ===== Recordatorios: archivo de calendario con alarma ===== */
-function icsOpen(title,date,time,rrule,desc){const dt=date.replace(/-/g,'')+'T'+(time||'09:00').replace(':','')+'00';const now=new Date().toISOString().replace(/[-:]/g,'').slice(0,15)+'Z';
-  const t=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//GlowUp Deysi//ES','CALSCALE:GREGORIAN','BEGIN:VEVENT','UID:'+uid()+'@glowup','DTSTAMP:'+now,'DTSTART;TZID=America/Guayaquil:'+dt,'DURATION:PT15M','SUMMARY:'+title.replace(/[,;]/g,' '),
-    desc?'DESCRIPTION:'+desc.replace(/\n/g,' ').replace(/[,;]/g,' '):'',rrule?'RRULE:'+rrule:'','BEGIN:VALARM','TRIGGER:-PT0M','ACTION:DISPLAY','DESCRIPTION:'+title.replace(/[,;]/g,' '),'END:VALARM','END:VEVENT','END:VCALENDAR'].filter(Boolean).join('\r\n');
-  const url='data:text/calendar;charset=utf-8,'+encodeURIComponent(t);
-  const w=window.open(url,'_blank');if(!w){location.href=url}}
+const VTZ='BEGIN:VTIMEZONE\r\nTZID:America/Guayaquil\r\nBEGIN:STANDARD\r\nDTSTART:19700101T000000\r\nTZOFFSETFROM:-0500\r\nTZOFFSETTO:-0500\r\nTZNAME:ECT\r\nEND:STANDARD\r\nEND:VTIMEZONE';
+async function icsOpen(title,date,time,rrule,desc){const dt=date.replace(/-/g,'')+'T'+(time||'09:00').replace(':','')+'00';const now=new Date().toISOString().replace(/[-:]/g,'').slice(0,15)+'Z';const cl=x=>x.replace(/\n/g,' ').replace(/[,;]/g,' ');
+  const t=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//GlowUp Deysi//ES','CALSCALE:GREGORIAN','METHOD:PUBLISH',VTZ,'BEGIN:VEVENT','UID:'+uid()+'@glowup','DTSTAMP:'+now,'DTSTART;TZID=America/Guayaquil:'+dt,'DURATION:PT15M','SUMMARY:'+cl(title),
+    desc?'DESCRIPTION:'+cl(desc):'',rrule?'RRULE:'+rrule:'','BEGIN:VALARM','TRIGGER:-PT0M','ACTION:DISPLAY','DESCRIPTION:'+cl(title),'END:VALARM','END:VEVENT','END:VCALENDAR'].filter(Boolean).join('\r\n')+'\r\n';
+  const file=new File([t],'recordatorio.ics',{type:'text/calendar'});
+  try{if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file]});return}}catch(e){if(e.name==='AbortError')return}
+  const a=document.createElement('a');a.href=URL.createObjectURL(file);a.download='recordatorio.ics';a.click()}
 const REM={dia:['✦ Glow Up: registra tu día','21:30','FREQ=DAILY'],manana:['✦ Glow Up: elige tu prioridad','07:45','FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR'],gasto:['✦ Glow Up: anota tus gastos','20:00','FREQ=DAILY'],semana:['✦ Glow Up: revisión semanal + respaldo','19:00','FREQ=WEEKLY;BYDAY=SU'],seg:['💼 Revisar pendientes y seguimientos','08:30','FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR']};
 
 /* ===== Acciones ===== */
@@ -417,7 +419,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-act],[data
    case 'habon':S.habits[+ds.i].on=!S.habits[+ds.i].on;save();break;
    case 'ldel':if(!confirm('¿Eliminar este elemento de la lista?'))return;S[ds.l].splice(+ds.i,1);save();break;
    case 'ladd':S[ds.l].push(ds.l==='habits'?{id:'h_'+uid(),ic:'⭐',name:'Nuevo hábito',on:true}:'Nuevo');save();break;
-   case 'rem':{const r=REM[ds.v];let d=today();if(ds.v==='semana'){while(parse(d).getDay()!==0)d=addDays(d,1)}icsOpen(r[0],d,r[1],r[2],'Abre tu app Glow Up');return}
+   case 'rem':{window.open(new URL('rem-'+ds.v+'.ics',location.href).href,'_blank');return}
    case 'backup':backup();return;
    case 'restore':document.getElementById('file').click();return;
    default:return}
